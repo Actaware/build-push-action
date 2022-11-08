@@ -4,7 +4,7 @@ description: 'Returns new version using analyses made by GitVersion'
 outputs:
   version:
     description: "Version number"
-    value: ${{ env.GitVersion_SemVer }}
+    value: ${{ steps.output-version.outputs.output-version }}
     
 runs:
   using: "composite"
@@ -16,3 +16,7 @@ runs:
 
     - name: Determine Version
       uses: gittools/actions/gitversion/execute@v0.9.7
+
+    - id: output-version
+      run: echo "output-version=${{ env.GitVersion_SemVer }}" >> $GITHUB_OUTPUT
+      shell: bash
