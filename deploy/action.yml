@@ -34,9 +34,6 @@ runs:
   - name: Set tag to deployment
     shell: bash
     run: |
-      cd deploy
-      ls
-      cat company-agg-deploy.yaml
       sed -i 's/<image_tag>/${{ inputs.image-tag }}/g' ${{ inputs.deploy-file }}
 
   - name: Deploy to K8s
