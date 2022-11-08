@@ -20,6 +20,10 @@ inputs:
     description: 'Container registry URL'
     required: false
     default: ghcr.io
+  push:
+    description: 'Push to GHCR'
+    required: false
+    default: false
    
 runs:
   using: "composite"
@@ -46,6 +50,6 @@ runs:
       with:
         context: ${{ inputs.dockerfile-dir }}
         file: ${{ inputs.dockerfile-dir }}/Dockerfile
-        push: ${{ github.event_name != 'pull_request' }}
+        push: ${{ inputs.push }}
         tags: ${{ steps.meta.outputs.tags }}
         labels: ${{ steps.meta.outputs.labels }}
