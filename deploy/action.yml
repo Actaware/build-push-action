@@ -3,19 +3,19 @@ name: 'Deploy service to k8s'
 description: 'Deploy image from github registry to the k8s cluster. '
 inputs:
   kubeconfig:  
-    description: 'base64 encoded string containng kubeconfig file. Necessary to acces cluser from kubectl.'
+    description: 'base64 encoded string containng kubeconfig file. Necessary to acces cluser from kubectl'
     required: true
   cluster-name:  
     description: 'k8s culster name.'
     required: true
   image-tag:  
-    description: 'Tag of image from gitHub container registry.'
+    description: 'Tag of image from gitHub container registry'
     required: true
   deploy-file:  
-    description: 'Path to deploy resource yaml file.'
+    description: 'Path to deploy resource yaml file. '
     required: true
   service:  
-    description: 'Folder where Dockerfile is located.'
+    description: 'Folder where Dockerfile is located'
     required: true
 
 runs:
@@ -25,7 +25,7 @@ runs:
     shell: bash
     run: |
       mkdir ${HOME}/.kube
-      echo ${{ inputs.kubeconfig }} | base64 --decode > ${HOME}/.kube/config\
+      echo ${{ inputs.kubeconfig }} | base64 --decode > ${HOME}/.kube/config
 
   - name: Set Context
     shell: bash
