@@ -2,7 +2,7 @@ name: 'Returns version'
 description: 'Returns new version using analyses made by GitVersion'
 
 outputs:
-  image-version:
+  version:
     description: "Version number"
     value: ${{ env.GitVersion_SemVer }}
     
