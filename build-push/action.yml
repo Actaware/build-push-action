@@ -10,7 +10,7 @@ inputs:
   image-name:  
     description: 'Image name'
     required: true
-  version:  
+  image-version:  
     description: 'Image version'
     required: true
   dockerfile-dir:  
@@ -39,7 +39,7 @@ runs:
         tags: |
           type=ref,event=branch
           type=ref,event=pr
-          type=semver,pattern={{version}},value=${{ inputs.version }}
+          type=semver,pattern={{version}},value=${{ inputs.image-version }}
         
     - name: Build and push Docker image
       uses: docker/build-push-action@v2
