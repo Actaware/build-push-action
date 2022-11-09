@@ -26,6 +26,10 @@ runs:
     run: |
       mkdir ${HOME}/.kube
       echo ${{ inputs.kubeconfig }} | base64 --decode > ${HOME}/.kube/config
+  - name: test
+    shell: bash
+    run: |
+       ls 
 
   - name: Set Context
     shell: bash
