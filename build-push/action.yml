@@ -13,15 +13,19 @@ inputs:
   image-version:  
     description: 'Image version'
     required: true
-  dockerfile-dir:  
-    description: 'Folder where Dockerfile is located'
+  dockerfile:  
+    description: 'Dockerfile location'
     required: true
+  context:
+    description: 'Context folder'
+    required: false
+    default: ""
   container-registry:
     description: 'Container registry URL'
     required: false
     default: ghcr.io
   push:
-    description: 'Push to GHCR'
+    description: 'Push to Container'
     required: false
     default: false
    
@@ -48,8 +52,8 @@ runs:
     - name: Build and push Docker image
       uses: docker/build-push-action@v2
       with:
-        context: ${{ inputs.dockerfile-dir }}
-        file: ${{ inputs.dockerfile-dir }}/Dockerfile
+        context: ${{ inputs.context }}
+        file: ${{ inputs.dockerfile }}
         push: ${{ inputs.push }}
         tags: ${{ steps.meta.outputs.tags }}
         labels: ${{ steps.meta.outputs.labels }}
