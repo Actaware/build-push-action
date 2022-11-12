@@ -19,7 +19,7 @@ inputs:
   context:
     description: 'Context folder'
     required: false
-    default: ""
+    default: "./"
   container-registry:
     description: 'Container registry URL'
     required: false
