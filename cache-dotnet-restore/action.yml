@@ -1,0 +1,33 @@
+name: 'Dotnet restore witch cache for docker'
+description: 'Dotnet restore witch cache for docker'
+inputs:
+  token:  
+    description: 'GitHub Container Registry Token'
+    required: true
+  root:
+    description: 'folder/file to restore'
+    required: true
+  cache-folder:
+    description: 'Cached folder'
+    required: false
+    default: './src/_packages_cache'
+   
+runs:
+  using: "composite"
+  steps:
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v3
+      with:
+        dotnet-version: 6.0.x
+        source-url: https://nuget.pkg.github.com/Actaware/index.json
+      env:
+        NUGET_AUTH_TOKEN: ${{ inputs.token }}
+
+    - uses: actions/cache@v3
+      with:
+        path: ${{ inputs.cache-folder }}
+        key: ${{ runner.os }}-nuget-${{ hashFiles('**/packages.lock.json') }}
+        restore-keys: ${{ runner.os }}-nuget-
+
+    - name: Restore dependencies
+      run: dotnet restore ${{ inputs.root }} --packages ${{ inputs.cache-folder }}
