@@ -1,0 +1,33 @@
+name: 'Run int tests'
+description: 'Run int tests'
+inputs:
+  token:  
+    description: 'GitHub Container Registry Token'
+    required: true
+  project:
+    description: 'project file with unit tests'
+    required: true
+   
+runs:
+  using: "composite"
+  steps:
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v3
+      with:
+        dotnet-version: 6.0.x
+        source-url: https://nuget.pkg.github.com/Actaware/index.json
+      env:
+        NUGET_AUTH_TOKEN: ${{ inputs.token }}
+
+    - name: Restore dependencies
+      shell: bash
+      run: dotnet restore ${{ inputs.project }}
+
+    - name: Build
+      shell: bash
+      run: dotnet build ${{ inputs.project }} --no-restore
+
+    - name: Run unit tests
+      shell: bash
+      run: dotnet test ${{ inputs.project }} --no-build --verbosity normal
+      
