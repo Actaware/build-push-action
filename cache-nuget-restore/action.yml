@@ -1,0 +1,23 @@
+name: 'Restore and cache nugets'
+description: 'Restore and cache nugets'
+
+inputs:
+  root:  
+    description: 'folder/project to restore'
+    required: true
+    
+runs:
+  using: "composite"
+  steps:
+    - uses: actions/download-artifact@v3
+      with:
+        name: nugets-cache
+        path: ./src/_packages_cache
+
+    - name: Restore dependencies
+      run: dotnet restore ${{ inputs.root }} --packages ./src/_packages_cache
+
+    - uses: actions/upload-artifact@v3
+      with:
+        name: nugets-cache
+        path: ./src/_packages_cache
