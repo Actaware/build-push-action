@@ -40,4 +40,3 @@ runs:
     shell: bash  
     run: |
       kubectl apply -f ${{ inputs.deploy-file }}
-      kubectl wait deployment ${{ inputs.service }} --for condition=Available=True --timeout=100s
