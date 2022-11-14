@@ -23,7 +23,7 @@ inputs:
   container-registry:
     description: 'Container registry URL'
     required: false
-    default: ghcr.io
+    default: ghcr.io/actaware
   push:
     description: 'Push to Container'
     required: false
